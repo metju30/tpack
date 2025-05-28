@@ -1,0 +1,737 @@
+private void ExportClntPrivate(DataSet podatki)
+{
+    if (podatki.Tables[0].Rows.Count > 0) // if there is not data in the table we do not export xml
+    {
+        XmlDocument xmlDoc = new XmlDocument();
+        try
+        {
+            xmlDoc = XmlClntPrivate(podatki);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error creating xml.", ex);
+        }
+        try
+        {
+            SignXml(xmlDoc, certificate);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error signing xml.", ex);
+        }
+        try
+        {
+            string fullPath = Path.Combine(Path.GetFullPath(GLOBALS.Settings.NBSRegisterOutputFolder), fileNameClntPrivate);
+
+            using (XmlTextWriter writer = new XmlTextWriter(fullPath, Encoding.UTF8))
+            {
+                xmlDoc.Save(writer);
+                writer.Close();
+                fileList.Add(fileNameClntPrivate); // needed by gernerating info file at the end
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error exporting to xml file.", ex);
+        }
+    }
+}
+
+private XmlDocument XmlClntPrivate(DataSet data)
+{
+    XmlDocument xmlDoc = new XmlDocument();
+    XmlDeclaration xmlDeclaration = xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
+
+    XmlElement rootNode = xmlDoc.CreateElement("dokument");
+    xmlDoc.InsertBefore(xmlDeclaration, xmlDoc.DocumentElement);
+    xmlDoc.AppendChild(rootNode);
+
+    rootNode.Add("podatkeobradio", GLOBALS.Uporabnik.Ime + " " + GLOBALS.Uporabnik.Priimek);
+    rootNode.Add("kontakt", GLOBALS.Uporabnik.Telefon + ", " + GLOBALS.Uporabnik.Email);
+    rootNode.Add("dinamikaslanja", "1");
+    rootNode.Add("obuhvatpodataka", "1");
+
+    XmlElement dataNode = xmlDoc.CreateElement("gradjani");
+    rootNode.AppendChild(dataNode);
+    foreach (DataRow row in data.Tables[0].Rows) // RZF-MP
+    {
+        XmlElement rowNode = xmlDoc.CreateElement("gradjanin");
+        // izvozNode.Add("gradjanin_ID", row["KLNT"]);
+        rowNode.Add("JMBG", row["EMSO"]);
+        rowNode.Add("PIB", row["DAVS"]);
+        rowNode.Add("ime", row["IME"]);
+        rowNode.Add("prezime", row["PRIM"]);
+        rowNode.Add("pol", row["SPOL"]);
+        rowNode.Add("adresa_ulica", row["ULIC"]);
+        rowNode.Add("adresa_broj", row["HIST"]);
+        rowNode.Add("adresa_pbroj", row["POST"]);
+        rowNode.Add("adresa_mesto", row["KRAJ"]);
+        rowNode.Add("datum_podatka", row["DATV"]);
+        dataNode.AppendChild(rowNode);
+    }
+
+    return xmlDoc;
+}
+
+private void ExportCntrPrivate(DataSet podatki)
+{
+    int d = 0;
+    for (int i = 1; i <= 5; i++)
+    {
+        if (podatki.Tables[i].Rows.Count > 0) d++;
+    }
+    if (d > 0) // if there is not data in the tables 1...5 we do not export xml
+    {
+        XmlDocument xmlDoc = new XmlDocument();
+        try
+        {
+            xmlDoc = XmlCntrPrivate(podatki);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error creating xml.", ex);
+        }
+        try
+        {
+            SignXml(xmlDoc, certificate);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error signing xml.", ex);
+        }
+        try
+        {
+            string fullPath = Path.Combine(Path.GetFullPath(GLOBALS.Settings.NBSRegisterOutputFolder), fileNameCntrPrivate);
+
+            using (XmlTextWriter writer = new XmlTextWriter(fullPath, Encoding.UTF8))
+            {
+                xmlDoc.Save(writer);
+                writer.Close();
+                fileList.Add(fileNameCntrPrivate); // needed by gernerating info file at the end
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error exporting to xml file.", ex);
+        }
+    }
+}
+
+private XmlDocument XmlCntrPrivate(DataSet podatki)
+{
+    XmlDocument xmlDoc = new XmlDocument();
+    XmlDeclaration xmlDeclaration = xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
+
+    XmlElement rootNode = xmlDoc.CreateElement("dokument");
+    xmlDoc.InsertBefore(xmlDeclaration, xmlDoc.DocumentElement);
+    xmlDoc.AppendChild(rootNode);
+
+    rootNode.Add("podatkeobradio", GLOBALS.Uporabnik.Ime + " " + GLOBALS.Uporabnik.Priimek);
+    rootNode.Add("kontakt", GLOBALS.Uporabnik.Telefon + ", " + GLOBALS.Uporabnik.Email);
+    rootNode.Add("dinamikaslanja", "1");
+    rootNode.Add("obuhvatpodataka", "1");
+
+    XmlElement dataNode = xmlDoc.CreateElement("ugovori");
+    rootNode.AppendChild(dataNode);
+
+    for (int i = 1; i <= 5; i++)
+    {
+        foreach (DataRow row in podatki.Tables[i].Rows) // RZF-LKZ
+        {
+            string sifraValutePogodbe = row.Field("SVAL", string.Empty);
+            boValuta valutaPogodbe = (boValuta)Sifranti.Valute[sifraValutePogodbe];
+            int stme = row.Field("STME", 0);
+            int vrstaOdplacevanja = row.Field("ODPD", 0) / (stme != 0 ? stme : 1);
+            decimal tecajPogodbe = row.Field("TECJ", 0.0m);
+            decimal barwert = row.Field("BARW", 0.0m) * tecajPogodbe;
+            decimal dolg = row.Field("DOLG", 0.0m);
+
+            bool finVDomaci = valutaPogodbe.Naziv == GLOBALS.Settings.ValutaNacionalna.Naziv;
+
+            XmlElement rowNode = xmlDoc.CreateElement("ugovor");
+            // izvozNode.Add("Gradjanin_ID", row["KLNT"]);
+            rowNode.Add("JMBG", row["EMSO"]);
+            rowNode.Add("broj_ugovora", row["ST_POGODBE"]);
+            rowNode.Add("nosilac_jemac", row["KLIENT_TIP"]);
+            rowNode.Add("vrsta", row["KLIENT_VRKR"]);
+            rowNode.Add("valuta", finVDomaci ? GLOBALS.Settings.ValutaNacionalna.Naziv : GLOBALS.Settings.ValutaNacionalna.Naziv + "-" + valutaPogodbe.Naziv);
+            rowNode.Add("datum_odobrenja", row["DAKT"]);
+            rowNode.Add("period_otplate", vrstaOdplacevanja);
+            rowNode.Add("jedinica_otplate", "M");
+            rowNode.Add("iznos", RecalcValue(row["VRED"], tecajPogodbe, sifraValutePogodbe, GLOBALS.Settings.ValutaNacionalna.Sifra));
+            rowNode.Add("iznos_rate", RecalcValue(row["ANUI"], tecajPogodbe, sifraValutePogodbe, GLOBALS.Settings.ValutaNacionalna.Sifra));
+            rowNode.Add("pocetak_otplate", row["DZAP"]);
+            rowNode.Add("kraj_otplate", row["DKON"]);
+            rowNode.Add("rok_otplate", row["ODPD"]);
+            rowNode.Add("jedinica_rok", "M");
+            rowNode.Add("stanje_duga", (barwert + dolg).ToString("#0.00").Replace(',', '.'));
+            rowNode.Add("status", row["DOLG_STATUS"]);
+            rowNode.Add("datum_docnje", row.Field<DateTime?>("DOLG_STATUS_ZACETEK"));
+            rowNode.Add("dana_u_docnji", row["DOLG_STATUS_STAROST"]);
+            rowNode.Add("iznos_docnje", row.Field("DOLG_STATUS_ZNESEK", 0.0m).ToString().Replace(',', '.'));
+            rowNode.Add("datum_podatka", ExportDate);
+            dataNode.AppendChild(rowNode);
+        }
+    }
+
+    return xmlDoc;
+}
+
+ private void ExportCntrLegal(DataSet podatki)
+{
+    int d = 0;
+    for (int i = 7; i <= 9; i++)
+    {
+        if (podatki.Tables[i].Rows.Count > 0) d++;
+    }
+    if (d > 0) // if there is not data in the tables 7...9 we do not export xml
+    {
+        XmlDocument xmlDoc = new XmlDocument();
+        try
+        {
+            xmlDoc = XmlCntrLegal(podatki);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error creating xml.", ex);
+        }
+        try
+        {
+            SignXml(xmlDoc, certificate);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error signing xml.", ex);
+        }
+        try
+        {
+            string fullPath = Path.Combine(Path.GetFullPath(GLOBALS.Settings.NBSRegisterOutputFolder), fileNameCntrLegal);
+
+            using (XmlTextWriter writer = new XmlTextWriter(fullPath, Encoding.UTF8))
+            {
+
+                xmlDoc.Save(writer);
+                writer.Close();
+                fileList.Add(fileNameCntrLegal);
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error exporting to xml file.", ex);
+        }
+    }
+}
+
+private XmlDocument XmlCntrLegal(DataSet podatki)
+{
+    XmlDocument xmlDoc = new XmlDocument();
+    XmlDeclaration xmlDeclaration = xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
+
+    XmlElement rootNode = xmlDoc.CreateElement("dokument");
+    xmlDoc.InsertBefore(xmlDeclaration, xmlDoc.DocumentElement);
+    xmlDoc.AppendChild(rootNode);
+
+    rootNode.Add("podatkeobradio", GLOBALS.Uporabnik.Ime + " " + GLOBALS.Uporabnik.Priimek);
+    rootNode.Add("kontakt", GLOBALS.Uporabnik.Telefon + ", " + GLOBALS.Uporabnik.Email);
+    rootNode.Add("dinamikaslanja", "1");
+    rootNode.Add("obuhvatpodataka", "1");
+
+    XmlElement dataNode = xmlDoc.CreateElement("statusi_lizing_lica_f");
+    rootNode.AppendChild(dataNode);
+
+    for (int i = 7; i <= 9; i++)
+    {
+        foreach (DataRow row in podatki.Tables[i].Rows) // RZP-LKZ
+        {
+            XmlElement rowNode = xmlDoc.CreateElement("status_lizing_lice_f");
+            rowNode.Add("broj_partije", row["ST_POGODBE"]);
+            rowNode.Add("maticni_broj", row["MATS"]);
+            rowNode.Add("pib", row["DAVS"]);
+            rowNode.Add("veza", row["KLIENT_TIP"]);
+            rowNode.Add("opis", row["DOLG_STATUS"]);
+            rowNode.Add("datum_nastanka_docnje", row["DOLG_STATUS_ZACETEK"]);
+            rowNode.Add("broj_dana_docnje", row["DOLG_STATUS_STAROST"]);
+            rowNode.Add("iznos_docnje", row["DOLG_STATUS_ZNESEK"] == DBNull.Value ? row["DOLG_STATUS_ZNESEK"] : row.Field("DOLG_STATUS_ZNESEK", 0.0m).ToString().Replace(',', '.'));
+            rowNode.Add("nacin_naplate", row["DOLG_NACIN_POPLACILA"]);
+            rowNode.Add("kbinu", ExportDate);
+            dataNode.AppendChild(rowNode);
+        }
+    }
+
+    return xmlDoc;
+}
+
+private void ExportClntLegal(DataSet podatki)
+{
+    if (podatki.Tables[6].Rows.Count > 0) // if there is not data in the table we do not export xml
+    {
+        XmlDocument xmlDoc = new XmlDocument();
+
+        try
+        {
+            xmlDoc = XmlClntLegal(podatki);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error creating xml.", ex);
+        }
+        try
+        {
+            SignXml(xmlDoc, certificate);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error signing xml.", ex);
+        }
+        try
+        {
+            string fullPath = Path.Combine(Path.GetFullPath(GLOBALS.Settings.NBSRegisterOutputFolder), fileNameClntLegal);
+
+            using (XmlTextWriter writer = new XmlTextWriter(fullPath, Encoding.UTF8))
+            {
+
+                xmlDoc.Save(writer);
+                writer.Close();
+                fileList.Add(fileNameClntLegal);
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error exporting to xml file.", ex);
+        }
+    }
+}
+
+private XmlDocument XmlClntLegal(DataSet podatki)
+{
+    XmlDocument xmlDoc = new XmlDocument();
+    XmlDeclaration xmlDeclaration = xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
+
+    XmlElement rootNode = xmlDoc.CreateElement("dokument");
+    xmlDoc.InsertBefore(xmlDeclaration, xmlDoc.DocumentElement);
+    xmlDoc.AppendChild(rootNode);
+
+    rootNode.Add("podatkeobradio", GLOBALS.Uporabnik.Ime + " " + GLOBALS.Uporabnik.Priimek);
+    rootNode.Add("kontakt", GLOBALS.Uporabnik.Telefon + ", " + GLOBALS.Uporabnik.Email);
+    rootNode.Add("dinamikaslanja", "1");
+    rootNode.Add("obuhvatpodataka", "1");
+
+    XmlElement dataNode = xmlDoc.CreateElement("firme");
+    rootNode.AppendChild(dataNode);
+    foreach (DataRow row in podatki.Tables[6].Rows) // RZP-MP
+    {
+        XmlElement rowNode = xmlDoc.CreateElement("firma");
+        rowNode.Add("maticni_broj", row["MATS"]);
+        rowNode.Add("pib", row["DAVS"]);
+        rowNode.Add("tip_lica", row["VRKL"]);
+        rowNode.Add("sifra_delatnosti", row["VRPO"]);
+        rowNode.Add("reg_naziv", row["NAZ1"]);
+        if (row["NAZD"].ToString().Length > 105)
+            row["NAZD"] = row["NAZD"].ToString().Substring(0, 105);
+        rowNode.Add("skraceni_naziv", row["NAZD"]);
+        rowNode.Add("god_osnivanja", row["DUST"]);
+        rowNode.Add("sediste", row["KRAJ"]);
+        rowNode.Add("adresa", row["NASL"]);
+        rowNode.Add("telefon", row["TELE"]);
+        rowNode.Add("www", "");
+        rowNode.Add("email", row["MAIL"]);
+        rowNode.Add("velicina", "");
+        rowNode.Add("kbinu", row["DATV"] == DBNull.Value ? ExportDate : row["DATV"]);
+        dataNode.AppendChild(rowNode);
+    }
+
+    return xmlDoc;
+}
+
+private void ExportCntrLegalCond(DataSet podatki)
+{
+    if (podatki.Tables[10].Rows.Count > 0) // if there is not data in the table we do not export xml
+    {
+        XmlDocument xmlDoc = new XmlDocument();
+
+        try
+        {
+            xmlDoc = XmlCntrLegalCond(podatki);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error creating xml.", ex);
+        }
+        try
+        {
+            SignXml(xmlDoc, certificate);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error signing xml.", ex);
+        }
+        try
+        {
+            string fullPath = Path.Combine(Path.GetFullPath(GLOBALS.Settings.NBSRegisterOutputFolder), fileNameCntrLegalCond);
+
+            using (XmlTextWriter writer = new XmlTextWriter(fullPath, Encoding.UTF8))
+            {
+                xmlDoc.Save(writer);
+                writer.Close();
+                fileList.Add(fileNameCntrLegalCond);
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error exporting to xml file.", ex);
+        }
+    }
+}
+
+private XmlDocument XmlCntrLegalCond(DataSet podatki)
+{
+    XmlDocument xmlDoc = new XmlDocument();
+    XmlDeclaration xmlDeclaration = xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
+
+    XmlElement rootNode = xmlDoc.CreateElement("dokument");
+    xmlDoc.InsertBefore(xmlDeclaration, xmlDoc.DocumentElement);
+    xmlDoc.AppendChild(rootNode);
+
+    rootNode.Add("podatkeobradio", GLOBALS.Uporabnik.Ime + " " + GLOBALS.Uporabnik.Priimek);
+    rootNode.Add("kontakt", GLOBALS.Uporabnik.Telefon + ", " + GLOBALS.Uporabnik.Email);
+    rootNode.Add("dinamikaslanja", "1");
+    rootNode.Add("obuhvatpodataka", "1");
+
+    XmlElement dataNode = xmlDoc.CreateElement("ugovori");
+    rootNode.AppendChild(dataNode);
+
+    foreach (DataRow row in podatki.Tables[10].Rows) // RZP-LUU
+    {
+        decimal tecajPogodbe = (decimal)row["TECJ"];
+        string sifraValutePogodbe = (string)row["SVAL"];
+
+        XmlElement rowNode = xmlDoc.CreateElement("lizing");
+        rowNode.Add("broj_partije", row["ST_POGODBE"]);
+        rowNode.Add("vrsta", row["VRKR_PRAV"]);
+        rowNode.Add("valuta", row["NVAL"]); // vrednosti so RSD in RSD-EUR
+        rowNode.Add("odobreni_iznos", RecalcValue(row["VRED"], tecajPogodbe, sifraValutePogodbe, GLOBALS.Settings.ValutaNacionalna.Sifra));
+        rowNode.Add("datum_pocetka_otplate", row["DZAP"]);
+        rowNode.Add("datum_kraja_otplate", row["DKON"]);
+        rowNode.Add("datum_aktivacije", row["DAKT"]);
+        //PREVERI VRSTICO                izvozNode.Add("Iskorisceni_iznos", row[""]);
+        rowNode.Add("period_otplate", row["ODPD"]);
+        rowNode.Add("jedinica_period", row["ENOTA_OBRACUNA"]);
+        rowNode.Add("ostatak_duga", (row.Field("BARW", 0.0m) * tecajPogodbe + row.Field("DOLG", 0.0m)).ToString("#0.00").Replace(',', '.'));
+        rowNode.Add("kbinu", ExportDate);
+        dataNode.AppendChild(rowNode);
+    }
+
+    return xmlDoc;
+}
+
+private void ExportCntrLegalFound(DataSet podatki)
+{
+    if (podatki.Tables[11].Rows.Count > 0) // if there is not data in the table we do not export xml
+    {
+        XmlDocument xmlDoc = new XmlDocument();
+
+        try
+        {
+            xmlDoc = XmlCntrLegalFound(podatki);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error creating xml.", ex);
+        }
+        try
+        {
+            SignXml(xmlDoc, certificate);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error signing xml.", ex);
+        }
+        try
+        {
+            string fullPath = Path.Combine(Path.GetFullPath(GLOBALS.Settings.NBSRegisterOutputFolder), fileNameCntrLegalFound);
+
+            using (XmlTextWriter writer = new XmlTextWriter(fullPath, Encoding.UTF8))
+            {
+                xmlDoc.Save(writer);
+                writer.Close();
+                fileList.Add(fileNameCntrLegalFound);
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error exporting to xml file.", ex);
+        }
+    }
+}
+
+private XmlDocument XmlCntrLegalFound(DataSet podatki)
+{
+    XmlDocument xmlDoc = new XmlDocument();
+    XmlDeclaration xmlDeclaration = xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
+
+    XmlElement rootNode = xmlDoc.CreateElement("dokument");
+    xmlDoc.InsertBefore(xmlDeclaration, xmlDoc.DocumentElement);
+    xmlDoc.AppendChild(rootNode);
+
+    rootNode.Add("podatkeobradio", GLOBALS.Uporabnik.Ime + " " + GLOBALS.Uporabnik.Priimek);
+    rootNode.Add("kontakt", GLOBALS.Uporabnik.Telefon + ", " + GLOBALS.Uporabnik.Email);
+    rootNode.Add("dinamikaslanja", "1");
+    rootNode.Add("obuhvatpodataka", "1");
+
+    XmlElement dataNode = xmlDoc.CreateElement("osnivaci");
+    rootNode.AppendChild(dataNode);
+
+    foreach (DataRow row in podatki.Tables[11].Rows) // RZP-MPO
+    {
+        XmlElement rowNode = xmlDoc.CreateElement("osnivac");
+        rowNode.Add("maticni_broj", row["MATS"]);
+        rowNode.Add("pib", row["DAVS"]);
+        rowNode.Add("tip_lica", row["TIP_OSNIVACA"]);
+        rowNode.Add("maticni_broj_o", row["LASTNIK_MATS"]);
+        rowNode.Add("jmbg", row["LASTNIK_EMSO"]);
+        rowNode.Add("ime", row["LASTNIK_IME"]);
+        rowNode.Add("prezime", row["LASTNIK_PRIM"]);
+        rowNode.Add("pol", row["LASTNIK_SPOL"]);
+        rowNode.Add("reg_naziv", row["LASTNIK_NAZ1"]);
+        rowNode.Add("napomena", "");
+        rowNode.Add("kbinu",ExportDate);
+        dataNode.AppendChild(rowNode);
+    }
+
+    return xmlDoc;
+}
+
+private void ExportCntrLegalGuarantor(DataSet podatki)
+{
+    int d = 0;
+    for (int i = 12; i <= 14; i++)
+    {
+        if (podatki.Tables[i].Rows.Count > 0) d++;
+    }
+    if (d > 0) // if there is not data in the tables 12...14 we do not export xml
+    {
+        XmlDocument xmlDoc = new XmlDocument();
+        try
+        {
+            xmlDoc = XmlCntrLegalGuarantor(podatki);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error creating xml.", ex);
+        }
+        try
+        {
+            SignXml(xmlDoc, certificate);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error signing xml.", ex);
+        }
+        try
+        {
+            string fullPath = Path.Combine(Path.GetFullPath(GLOBALS.Settings.NBSRegisterOutputFolder), fileNameCntrLegalGuatantor);
+
+            using (XmlTextWriter writer = new XmlTextWriter(fullPath, Encoding.UTF8))
+            {
+                xmlDoc.Save(writer);
+                writer.Close();
+                fileList.Add(fileNameCntrLegalGuatantor);
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error exporting to xml file.", ex);
+        }
+    }
+}
+
+private XmlDocument XmlCntrLegalGuarantor(DataSet podatki)
+{
+    XmlDocument xmlDoc = new XmlDocument();
+    XmlDeclaration xmlDeclaration = xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
+
+    XmlElement rootNode = xmlDoc.CreateElement("dokument");
+    xmlDoc.InsertBefore(xmlDeclaration, xmlDoc.DocumentElement);
+    xmlDoc.AppendChild(rootNode);
+
+    rootNode.Add("podatkeobradio", GLOBALS.Uporabnik.Ime + " " + GLOBALS.Uporabnik.Priimek);
+    rootNode.Add("kontakt", GLOBALS.Uporabnik.Telefon + ", " + GLOBALS.Uporabnik.Email);
+    rootNode.Add("dinamikaslanja", "1");
+    rootNode.Add("obuhvatpodataka", "1");
+
+    XmlElement dataNode = xmlDoc.CreateElement("statusi_lizing_lica_g");
+    rootNode.AppendChild(dataNode);
+
+    for (int i = 12; i <= 14; i++)
+    {
+        foreach (DataRow row in podatki.Tables[i].Rows) // RZP-LFLZ
+        {
+            XmlElement rowNode = xmlDoc.CreateElement("status_lizing_lice_g");
+            rowNode.Add("broj_partije", row["ST_POGODBE"]);
+            rowNode.Add("veza", row["KLIENT_TIP"]);
+            rowNode.Add("jmbg", row["EMSO"]);
+            rowNode.Add("ime", row["IME"]);
+            rowNode.Add("prezime", row["PRIM"]);
+            rowNode.Add("pol", row["SPOL"]);
+            rowNode.Add("opis", "");
+            rowNode.Add("datum_nastanka_docnje", "");
+            rowNode.Add("broj_dana_docnje", "");
+            rowNode.Add("iznos_docnje", "");
+            rowNode.Add("nacin_naplate", "");
+            rowNode.Add("datum_aktiviranja_jemstva", "");
+            rowNode.Add("iznos_aktiviranog_jemstva", "");
+            rowNode.Add("ostatak_duga_po_aktiviranom_jemstvu", "");
+            rowNode.Add("datum_otkazivanja_jemstva", podatki.Tables[i].Columns.Contains("DATUM_KONCANJA_POROSTVA") ? row["DATUM_KONCANJA_POROSTVA"] : DBNull.Value);
+            rowNode.Add("kbinu", row["DATUM_EXPORTA"]);
+
+            dataNode.AppendChild(rowNode);
+        }
+    }
+
+    return xmlDoc;
+}
+
+private void ExportCntrPrivateChar(DataSet podatki)
+{
+    if (podatki.Tables[15].Rows.Count > 0) // if there is not data in the table we do not export xml
+    {
+        XmlDocument xmlDoc = new XmlDocument();
+        try
+        {
+            xmlDoc = XmlCntrPrivateChar(podatki);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error creating xml.", ex);
+        }
+        try
+        {
+            SignXml(xmlDoc, certificate);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error signing xml.", ex);
+        }
+        try
+        {
+            string fullPath = Path.Combine(Path.GetFullPath(GLOBALS.Settings.NBSRegisterOutputFolder), fileNameCntrPrivateChar);
+
+            using (XmlTextWriter writer = new XmlTextWriter(fullPath, Encoding.UTF8))
+            {
+                xmlDoc.Save(writer);
+                writer.Close();
+                fileList.Add(fileNameCntrPrivateChar);
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error exporting to xml file.", ex);
+        }
+    }
+}
+
+private XmlDocument XmlCntrPrivateChar(DataSet podatki)
+{
+    XmlDocument xmlDoc = new XmlDocument();
+    XmlDeclaration xmlDeclaration = xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
+
+    XmlElement rootNode = xmlDoc.CreateElement("dokument");
+    xmlDoc.InsertBefore(xmlDeclaration, xmlDoc.DocumentElement);
+    xmlDoc.AppendChild(rootNode);
+
+    rootNode.Add("podatkeobradio", GLOBALS.Uporabnik.Ime + " " + GLOBALS.Uporabnik.Priimek);
+    rootNode.Add("kontakt", GLOBALS.Uporabnik.Telefon + ", " + GLOBALS.Uporabnik.Email);
+    rootNode.Add("dinamikaslanja", "1");
+    rootNode.Add("obuhvatpodataka", "1");
+
+    XmlElement dataNode = xmlDoc.CreateElement("karakteristike");
+    rootNode.AppendChild(dataNode);
+
+    foreach (DataRow row in podatki.Tables[15].Rows) // RZF-KLU
+    {
+        XmlElement rowNode = xmlDoc.CreateElement("karakteristika_ugovora");
+        // izvozNode.Add("Gradjanin_ID", row["KLNT"]);
+        rowNode.Add("JMBG", row["EMSO"]);
+        rowNode.Add("broj_ugovora", row["ST_POGODBE"]);
+        rowNode.Add("sifra", row["SIFRA"]);
+        rowNode.Add("vrednost", row["VRED"]);
+        rowNode.Add("datum_podatka", row["DATV"]);
+        dataNode.AppendChild(rowNode);
+    }
+
+    return xmlDoc;
+}
+
+
+private void ExportCntrLegalChar(DataSet podatki)
+{
+    if (podatki.Tables[16].Rows.Count > 0) // if there is not data in the table we do not export xml
+    {
+            XmlDocument xmlDoc = new XmlDocument();
+
+        try
+        {
+            xmlDoc = XmlCntrLegalChar(podatki);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error creating xml.", ex);
+        }
+        try
+        {
+            SignXml(xmlDoc, certificate);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error signing xml.", ex);
+        }
+        try
+        {
+            string fullPath = Path.Combine(Path.GetFullPath(GLOBALS.Settings.NBSRegisterOutputFolder), fileNameCntrLegalChar);
+
+            using (XmlTextWriter writer = new XmlTextWriter(fullPath, Encoding.UTF8))
+            {
+
+                xmlDoc.Save(writer);
+                writer.Close();
+                fileList.Add(fileNameCntrLegalChar);
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error exporting to xml file.", ex);
+        }
+    }
+}
+
+private XmlDocument XmlCntrLegalChar(DataSet podatki)
+{
+    XmlDocument xmlDoc = new XmlDocument();
+    XmlDeclaration xmlDeclaration = xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
+
+    XmlElement rootNode = xmlDoc.CreateElement("dokument");
+    xmlDoc.InsertBefore(xmlDeclaration, xmlDoc.DocumentElement);
+    xmlDoc.AppendChild(rootNode);
+
+    rootNode.Add("podatkeobradio", GLOBALS.Uporabnik.Ime + " " + GLOBALS.Uporabnik.Priimek);
+    rootNode.Add("kontakt", GLOBALS.Uporabnik.Telefon + ", " + GLOBALS.Uporabnik.Email);
+    rootNode.Add("dinamikaslanja", "1");
+    rootNode.Add("obuhvatpodataka", "1");
+
+    XmlElement dataNode = xmlDoc.CreateElement("pl_karakteristike");
+    rootNode.AppendChild(dataNode);
+
+    foreach (DataRow row in podatki.Tables[16].Rows) // RZP-KLU  
+    {
+        XmlElement rowNode = xmlDoc.CreateElement("pl_karakteristika_ugovora");
+        rowNode.Add("broj_ugovora", row["ST_POGODBE"]);
+        rowNode.Add("maticni_broj", row["MATS"]);
+        rowNode.Add("pib", row["DAVS"]);
+        rowNode.Add("sifra", row["SIFRA"]);
+        rowNode.Add("vrednost", row["VRED"]);
+        rowNode.Add("kbinu", row["DATV"]);
+        dataNode.AppendChild(rowNode);
+    }
+
+    return xmlDoc;
+}
