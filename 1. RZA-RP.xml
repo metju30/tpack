@@ -1,0 +1,38 @@
+<Dokument>
+	<PodatkeObradio>Petar Petrovic</PodatkeObradio>
+	<Kontakt>011-632145, petar.petrovic@nbs.rs</Kontakt>
+	<DinamikaSlanja>1</DinamikaSlanja>
+	<ObuhvatPodataka>1</ObuhvatPodataka>
+	<ReferentniPodaci>
+		<ReferentniPodac>
+			<MaticniBroj>Obavezno, Numerički niz, Maksimalno 8 karaktera, Nedozvoljeni karakteri: slova i specijalni simboli</MaticniBroj> <!-- fiksni podatak Porsche Leasing 17544004  -->
+			<Lice>Obavezno, Numerički niz, Maksimalno 30 karaktera</Lice> <!-- Matični broj klijenta za pravno lice fajl RZP-LKZ_10042025_1_1_17544004 tag <maticni_broj> za fizičko lice JMBG fajl RZF-MP_10042025_1_1_17544004 tag <JMBG>  -->
+			<PIB>Opcionalno, Numerički niz, Maksimalno 9 karaktera</PIB> <!-- Za pravno lice fajl RZP-LKZ_10042025_1_1_17544004 tag <pib> za fizičko lice tag treba da bude popunjan fiksno "NR" -->
+			<Sediste>Opcionalno, String, Maksimalno 50 karaktera</Sediste> <!--Za pravno lice fajl RZP-MP_10042025_1_1_17544004 tag <sediste> za fizičko lice tag treba da bude popunjan fiksno "NR" -->
+			<MaticnoDrustvo>Opcionalno, String, Maksimalno 50 karaktera</MaticnoDrustvo> <!--za sva lica tag treba da bude popunjan fiksno "NR" -->
+			<NajMaticnoDrustvo>Opcionalno, String, Maksimalno 50 karaktera</NajMaticnoDrustvo> <!--za sva lica tag treba da bude popunjan fiksno "NR" -->
+			<PovezanoLice>Opcionalno, String, Maksimalno 50 karaktera</PovezanoLice> <!---->
+			<TipVeze>Opcionalno, String, Maksimalno 2 karaktera</TipVeze> <!---->
+			<Ime>Obavezno, String, Maksimalno 100 karaktera, Nedozvoljeni karakteri: brojevi i specijalni simboli</Ime> <!---->
+			<Pol>Opcionalno, String, Maksimalno 1 karaktera</Pol> <!---->
+			<Telefon>Opcionalno, String, Maksimalno 20 karaktera</Telefon> <!---->
+			<InternetAdresa>Opcionalno, String, Maksimalno 100 karaktera</InternetAdresa> <!---->
+			<Email>Opcionalno, String, Maksimalno 50 karaktera</Email> <!---->
+			<StatusLica>Opcionalno, String, Maksimalno 20 karaktera</StatusLica> <!---->
+			<AdresaUlica>Obavezno, String, Maksimalno 100 karaktera</AdresaUlica> <!---->
+			<AdresaMesto>Obavezno, String, Maksimalno 50 karaktera</AdresaMesto> <!---->
+			<Opstina>Opcionalno, String, Maksimalno 50 karaktera</Opstina> <!---->
+			<PostanskiBroj>Obavezno, String, Maksimalno 10 karaktera</PostanskiBroj> <!---->
+			<Region>Opcionalno, String, Maksimalno 20 karaktera</Region> <!---->
+			<Zemlja>Opcionalno, String, Maksimalno 3 karaktera</Zemlja> <!-- -->
+			<VrstaLica>Obavezno, String, Maksimalno 20 karaktera</VrstaLica> <!---->
+			<PravnaForma>Opcionalno, String, Maksimalno 50 karaktera</PravnaForma> <!---->
+			<Sektor>Opcionalno, String, Maksimalno 50 karaktera</Sektor> <!---->
+			<StatusSudPostupka>Opcionalno, String, Maksimalno 50 karaktera</StatusSudPostupka> <!---->
+			<DatumSudPostupka>Opcionalno, Datum</DatumSudPostupka> <!---->
+			<PovezanostDFL>Opcionalno, String, Maksimalno 50 karaktera</PovezanostDFL> <!---->
+			<OznakaPovezanosti>Opcionalno, String, Maksimalno 50 karaktera</OznakaPovezanosti> <!---->
+			<DatumStanja>Obavezno, Datum, Nedozvoljeni karakteri: bilo šta osim numeričkih i '-'</DatumStanja> <!---->
+		</ReferentniPodac>
+	</ReferentniPodaci>
+</Dokument>

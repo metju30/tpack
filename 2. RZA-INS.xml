@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Dokument>
+    <PodatkeObradio>Petar Petrovic</PodatkeObradio>
+    <Kontakt>011-632145, petar.petrovic@nbs.rs</Kontakt>
+    <DinamikaSlanja>1</DinamikaSlanja>
+    <ObuhvatPodataka>1</ObuhvatPodataka>
+    <PodaciInstrumenti>
+        <PodaciInstrument>
+            <MaticniBroj>Obavezno, Numerički niz, Maksimalno 8 karaktera, Nedozvoljeni karakteri: slova i specijalni simboli</MaticniBroj>
+            <BrojUgovora>Obavezno, String, Maksimalno 50 karaktera</BrojUgovora>
+            <BrojInstrumenta>Obavezno, String, Maksimalno 50 karaktera</BrojInstrumenta>
+            <VrstaInstrumenta>Obavezno, Lista šifara, Maksimalno 2 karaktera</VrstaInstrumenta>
+            <TipAmortizacije>Obavezno, Lista šifara, Maksimalno 1 karakter</TipAmortizacije>
+            <Valuta>Obavezno, Lista šifara, Maksimalno 3 karaktera</Valuta>
+            <UgovorenaZastita>Obavezno, Lista šifara, Maksimalno 2 karaktera</UgovorenaZastita>
+            <DatumUgovora>Obavezno, Datum, Format: YYYY-MM-DD</DatumUgovora>
+            <DatumGlavnica>Obavezno, Datum, Format: YYYY-MM-DD</DatumGlavnica>
+            <DatumKamata>Obavezno, Datum, Format: YYYY-MM-DD</DatumKamata>
+            <GornjaKS>Opcionalno, String</GornjaKS>
+            <DonjaKS>Opcionalno, String</DonjaKS>
+            <UcestalostPromeneKS>Opcionalno, Lista šifara, Maksimalno 2 karaktera</UcestalostPromeneKS>
+            <Marza>Opcionalno, String</Marza>
+            <VrstaKS>Opcionalno, Lista šifara, Maksimalno 2 karaktera</VrstaKS>
+            <DatumDospeca>Obavezno, Datum, Format: YYYY-MM-DD</DatumDospeca>
+            <MaxIznosObaveze>Obavezno, Decimal, Maksimalno 15 karaktera</MaxIznosObaveze>
+            <IznosRate>Obavezno, Decimal, Maksimalno 15 karaktera</IznosRate>
+            <DinamikaGlavnica>Obavezno, Lista šifara, Maksimalno 1 karakter</DinamikaGlavnica>
+            <DinamikaKamata>Obavezno, Lista šifara, Maksimalno 1 karakter</DinamikaKamata>
+            <RKS>Opcionalno, Lista šifara, Maksimalno 15 karaktera</RKS>
+            <DatumTransakcije>Opcionalno, Datum, Format: YYYY-MM-DD</DatumTransakcije>
+            <DatumStanja>Obavezno, Datum, Format: YYYY-MM-DD</DatumStanja>
+        </PodaciInstrument>
+    </PodaciInstrumenti>
+</Dokument>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Dokument>
+    <PodatkeObradio>Petar Petrovic</PodatkeObradio>
+    <Kontakt>011-632145, petar.petrovic@nbs.rs</Kontakt>
+    <DinamikaSlanja>1</DinamikaSlanja>
+    <ObuhvatPodataka>1</ObuhvatPodataka>
+    <FinansijskiPodaci>
+        <FinansijskiPodatak>
+            <MaticniBroj>Obavezno, Numerički niz, Maksimalno 8 karaktera, Nedozvoljeni karakteri: slova i specijalni simboli</MaticniBroj>
+            <BrojUgovora>Obavezno, String, Maksimalno 50 karaktera</BrojUgovora>
+            <BrojInstrumenta>Obavezno, String, Maksimalno 50 karaktera</BrojInstrumenta>
+            <NKS>Obavezno, Decimal, Maksimalno 5 karaktera</NKS>
+            <EKS>Obavezno, Decimal, Maksimalno 5 karaktera</EKS>
+            <DatumPromeneKS>Opcionalno, Datum, Format: YYYY-MM-DD</DatumPromeneKS>
+            <NeotplaceniNomIznos>Obavezno, Decimal, Maksimalno 15 karaktera</NeotplaceniNomIznos>
+            <IznosDocnje>Obavezno, Decimal, Maksimalno 15 karaktera</IznosDocnje>
+            <DatumDocnje>Opcionalno, Datum, Format: YYYY-MM-DD</DatumDocnje>
+            <ObracunataKamata>Obavezno, Decimal, Maksimalno 15 karaktera</ObracunataKamata>
+            <RedovnaKamata>Obavezno, Decimal, Maksimalno 15 karaktera</RedovnaKamata>
+            <ZateznaKamata>Obavezno, Decimal, Maksimalno 15 karaktera</ZateznaKamata>
+            <DatumStanja>Obavezno, Datum, Format: YYYY-MM-DD</DatumStanja>
+        </FinansijskiPodatak>
+    </FinansijskiPodaci>
+</Dokument>

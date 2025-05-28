@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Dokument>
+    <PodatkeObradio>Petar Petrovic</PodatkeObradio>
+    <Kontakt>011-632145, petar.petrovic@nbs.rs</Kontakt>
+    <DinamikaSlanja>1</DinamikaSlanja>
+    <ObuhvatPodataka>1</ObuhvatPodataka>
+    <SredstvaObezbedjenja>
+        <SredstvoObezbedjenja>
+            <MaticniBroj>Obavezno, Numerički niz, Maksimalno 8 karaktera, Nedozvoljeni karakteri: slova i specijalni simboli</MaticniBroj>
+            <BrojSO>Obavezno, String, Maksimalno 50 karaktera</BrojSO>
+            <PruzalacKrZastite>Obavezno, Numerički niz, Maksimalno 13 karaktera</PruzalacKrZastite>
+            <VrstaSO>Obavezno, Lista šifara, Maksimalno 2 karaktera</VrstaSO>
+            <VrstaVrednostiSO>Obavezno, Lista šifara, Maksimalno 2 karaktera</VrstaVrednostiSO>
+            <VrednostSO>Obavezno, Decimal, Maksimalno 15 karaktera</VrednostSO>
+            <MetodVrednostiSO>Obavezno, Lista šifara, Maksimalno 1 karakter</MetodVrednostiSO>
+            <MestoNepokretnost>Opcionalno, String, Maksimalno 20 karaktera</MestoNepokretnost>
+            <DatumVrednostSO>Obavezno, Datum, Format: YYYY-MM-DD</DatumVrednostSO>
+            <IVrednostSO>Opcionalno, Decimal, Maksimalno 15 karaktera</IVrednostSO>
+            <DatumIVrednostSO>Opcionalno, Datum, Format: YYYY-MM-DD</DatumIVrednostSO>
+            <DatumStanja>Obavezno, Datum, Format: YYYY-MM-DD</DatumStanja>
+        </SredstvoObezbedjenja>
+    </SredstvaObezbedjenja>
+</Dokument>

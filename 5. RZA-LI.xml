@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Dokument>
+    <PodatkeObradio>Petar Petrovic</PodatkeObradio>
+    <Kontakt>011-632145, petar.petrovic@nbs.rs</Kontakt>
+    <DinamikaSlanja>1</DinamikaSlanja>
+    <ObuhvatPodataka>1</ObuhvatPodataka>
+    <VezaLicaInstrumenata>
+        <VezaLicaInstrumenta>
+            <MaticniBroj>Obavezno, Numerički niz, Maksimalno 8 karaktera, Nedozvoljeni karakteri: slova i specijalni simboli</MaticniBroj>
+            <Lice>Obavezno, Numerički niz, Maksimalno 8 karaktera</Lice>
+            <BrojUgovora>Obavezno, String, Maksimalno 50 karaktera</BrojUgovora>
+            <BrojInstrumenta>Obavezno, String, Maksimalno 50 karaktera</BrojInstrumenta>
+            <UlogaLica>Obavezno, Lista šifara, Maksimalno 1 karakter</UlogaLica>
+            <KreditnaZaduzenost>Opcionalno, Decimal, Maksimalno 15 karaktera</KreditnaZaduzenost>
+            <DatumStanja>Obavezno, Datum, Format: YYYY-MM-DD</DatumStanja>
+        </VezaLicaInstrumenta>
+    </VezaLicaInstrumenata>
+</Dokument>

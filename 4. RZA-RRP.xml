@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Dokument>
+    <PodatkeObradio>Petar Petrovic</PodatkeObradio>
+    <Kontakt>011-632145, petar.petrovic@nbs.rs</Kontakt>
+    <DinamikaSlanja>1</DinamikaSlanja>
+    <ObuhvatPodataka>1</ObuhvatPodataka>
+    <RacunovodstveniPodaci>
+        <RacunovodstveniPodatak>
+            <MaticniBroj>Obavezno, Numerički niz, Maksimalno 8 karaktera, Nedozvoljeni karakteri: slova i specijalni simboli</MaticniBroj>
+            <BrojUgovora>Obavezno, String, Maksimalno 50 karaktera</BrojUgovora>
+            <BrojInstrumenta>Obavezno, String, Maksimalno 50 karaktera</BrojInstrumenta>
+            <RacKlasifikacija>Obavezno, Lista šifara, Maksimalno 1 karakter</RacKlasifikacija>
+            <BilansPriznavanje>Obavezno, Lista šifara, Maksimalno 1 karakter</BilansPriznavanje>
+            <AkuOtpis>Obavezno, Decimal, Maksimalno 15 karaktera</AkuOtpis>
+            <AkuObezvredjenje>Obavezno, Decimal, Maksimalno 15 karaktera</AkuObezvredjenje>
+            <NivoObezvredjenja>Obavezno, Lista šifara, Maksimalno 1 karakter</NivoObezvredjenja>
+            <NacinObezvredjenja>Obavezno, Lista šifara, Maksimalno 1 karakter</NacinObezvredjenja>
+            <AkumuliranaFVKR>Opcionalno, Decimal, Maksimalno 15 karaktera</AkumuliranaFVKR>
+            <FBE>Opcionalno, Lista šifara, Maksimalno 1 karakter</FBE>
+            <DatumFBE>Opcionalno, Datum, Format: YYYY-MM-DD</DatumFBE>
+            <NetoVrednost>Obavezno, Decimal, Maksimalno 15 karaktera</NetoVrednost>
+            <DatumStanja>Obavezno, Datum, Format: YYYY-MM-DD</DatumStanja>
+        </RacunovodstveniPodatak>
+    </RacunovodstveniPodaci>
+</Dokument>
