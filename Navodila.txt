@@ -1,0 +1,970 @@
+PREGLED I OPIS SKUPOVA PODATAKA
+KONTROLNI DOKUMENT (INFO)
+Naziv dokumenta: <ListaFajlova>
+Dinamika dostave: prilikom svakog slanja podataka 
+Prilikom svakog slanja podataka prvo se dostavlja kontrolni fajl. Kontrolni fajl je u tekst formatu i predstavlja listu naziva fajlova koji će biti poslati kao jedna celina. Naziv fajla treba da bude u potpunosti u skladu sa pravilima imenovanja fajlova, s tim da se kao naziv fajla koristi reč INFO. Primer bi bio:
+INFO_21122021_1_1_99999999. xml (u skladu sa Tabelom 1.):
+naziv taga	sadržaj	tip	napomena
+<NazivFajla>
+	Lista naziva fajlova koji se šalju	String	Alfanumerički niz
+Obavezno popunjen
+Maksimalne dužine 35
+Primer kontrolnog fajla je u nastavku:
+<?xml version=“1.0“ encoding=“UTF-8“?>
+<Dokument>
+<PodatkeObradio>Petar Petrovic</PodatkeObradio>
+<Kontakt>011-632145, petar.petrovic@nbs.rs</Kontakt>
+<DinamikaSlanja></DinamikaSlanja>
+<ObuhvatPodataka></ObuhvatPodataka>
+<ListaFajlova>
+<NazivFajla>RZA-RP_21122021_1_1_99999999.XML</NazivFajla>
+<NazivFajla>RZA-SO_21122021_1_1_99999999.XML</NazivFajla>
+</ListaFajlova >
+</Dokument >
+
+1. SKUP PODATAKA: REFERENTNI PODACI O LICIMA KOJA SU POVEZANA SA INSTRUMENTOM (RZA-RP)
+Naziv dokumenta: <ReferentniPodaci>
+Dinamika dostave: dnevno na dan kada je sa licem sklopljen ugovor i pri svakoj promeni
+Primarni ključ:
+1.	jedinstvena oznaka davaoca finansijskog lizinga i
+2.	jedinstvena oznaka lica povezanog sa instrumentom.
+Tabela 5. Pregled i opis atributa u Skupu podataka Referentni podaci o licima koja su povezana sa instrumentom
+naziv taga	sadržaj	tip	napomena
+<MaticniBroj>	Jedinstvena oznaka davaoca finansijskog lizinga, odnosno matični broj davaoca finansijskog lizinga koji dostavlja podatke.	String	Numerički niz
+Obavezno popunjen
+Maksimalne dužine 8
+<Lice>	Jedinstvena oznaka lica povezanog sa instrumentom. 	String	Alfanumerički niz
+Obavezno popunjen
+Maksimalne dužine 30
+<PIB>	Poreski identifikacioni broj.
+	String	Numerički niz
+Obavezno popunjen
+Maksimalne dužine 9
+
+Kada ovaj atribut nije zahtevan prikazuje se oznaka NR, a kad ga nije moguće utvrditi prikazuje se oznaka NA.
+<Sediste>	Jedinstvena  oznaka sedišta lica povezanog sa instrumentom. 
+	String	Alfanumerički niz
+Obavezno popunjen
+Maksimalne dužine 30 
+
+Kada ovaj atribut nije zahtevan prikazuje se oznaka NR, a kad ga nije moguće utvrditi prikazuje se oznaka NA.
+<MaticnoDrustvo>	Jedinstvena oznaka neposrednog matičnog društva.
+	String	Alfanumerički niz
+Obavezno popunjen
+Maksimalne dužine 30 
+
+Kada ovaj atribut nije zahtevan prikazuje se oznaka NR, a kad ga nije moguće utvrditi prikazuje se oznaka NA.
+<NajMaticnoDrustvo>	Jedinstvena oznaka najvišeg matičnog društva.	String	Alfanumerički niz
+Obavezno popunjen
+Maksimalne dužine 30
+
+Kada ovaj atribut nije zahtevan prikazuje se oznaka NR, a kad ga nije moguće utvrditi prikazuje se oznaka NA.
+<PovezanoLice>	Jedinstvena oznaka povezanog lica.
+	String	Alfanumerički niz
+Obavezno popunjen
+Maksimalne dužine 30
+
+Kada ovaj atribut nije zahtevan prikazuje se oznaka NR, a kad ga nije moguće utvrditi prikazuje se oznaka NA.
+<TipVeze>	Tip veze.
+Prikazuje se za svako od povezanih lica prema sledećem šifarniku:
+0 – osnivačka,
+1 – upravljačka, 
+2 – srodnička, 
+3 – ostalo.	String	Lista šifara
+Obavezno popunjen
+Maksimalne dužine 2
+
+Kada ovaj atribut nije zahtevan prikazuje se oznaka NR, a kad ga nije moguće utvrditi prikazuje se oznaka NA.
+<Ime>	Ime.
+Prikazuje se puno poslovno ime pravnog lica, odnosno lično ime (ime, ime jednog roditelja i prezime) fizičkog lica. 	String	Alfanumerički niz
+Obavezno popunjen
+Maksimalne dužine 512
+<Pol>	Pol.
+Prikazuje se podatak o polu prema sledećem šifarniku:
+0 – ženski,
+1 – muški, 
+2 - ostalo.	string	Lista šifara
+Obavezno popunjen
+Maksimalne dužine 2
+
+Kada ovaj atribut nije zahtevan prikazuje se oznaka NR, a kad ga nije moguće utvrditi prikazuje se oznaka NA.
+<Telefon>	Telefon.	String	Numerički niz 
+Obavezan podatak
+Maksimalne dužine 128, pri čemu ako ima više telefona, podaci se odvajaju tačka-zarezom ’;’
+
+Kada ovaj atribut nije zahtevan prikazuje se oznaka NR, a kad ga nije moguće utvrditi prikazuje se oznaka NA.
+<InternetAdresa>	Veb sajt. 
+	String	Alfanumerički niz 
+Obavezan podatak
+Maksimalne dužine 512, pri čemu ako ih ima više, podaci se odvajaju tačka-zarezom ’;’
+
+Kada ovaj atribut nije zahtevan prikazuje se oznaka NR, a kad ga nije moguće utvrditi prikazuje se oznaka NA.
+<Email>	Imejl.	String	Alfanumerički niz 
+Obavezan podatak
+Maksimalne dužine 320, pri čemu ako ih ima više, podaci se odvajaju tačka-zarezom ’;’
+
+Kada ovaj atribut nije zahtevan prikazuje se oznaka NR, a kad ga nije moguće utvrditi prikazuje se oznaka NA.
+<StatusLica>	Status pravnog lica.
+Prikazuje se status pravnog lica i preduzetnika prema sledećem šifarniku:
+0 – aktivno,
+1 – neaktivno, 
+2 – stečaj, 
+3 – likvidacija,
+4 – brisano iz registra.	String	Lista šifara
+Obavezno popunjen
+Maksimalne dužine 2
+
+Kada ovaj atribut nije zahtevan prikazuje se oznaka NR, a kad ga nije moguće utvrditi prikazuje se oznaka NA.
+<AdresaUlica>	Adresa: ulica
+Prikazuju se podaci o nazivu ulice i broju iz adrese lica.	String	Alfanumerički niz
+Obavezno popunjen
+Maksimalne dužine 128, pri čemu su podaci o nazivu ulice i broju odvojeni zarezom.
+
+Kada ovaj atribut nije zahtevan unosi se oznaka NR.
+<AdresaMesto>	Adresa: mesto
+Prikazuje se podatak o mestu iz adrese lica. 	String	Alfanumerički niz
+Obavezno popunjen
+Maksimalne dužine 128
+
+Kada ovaj atribut nije zahtevan unosi se oznaka NR.
+<Opstina>	Adresa: opština
+Prikazuje se podatak o opštini iz adrese lica. 
+	String	Alfanumerički niz
+Obavezno popunjen
+Maksimalne dužine 50 
+
+Kada ovaj atribut nije zahtevan prikazuje se oznaka NR, a kad ga nije moguće utvrditi prikazuje se oznaka NA.
+<PostanskiBroj>	Adresa: poštanski broj
+Prikazuje se podatak o poštanskom broju mesta iz adrese lica u skladu sa atributom Adresa: mesto. 	String	Alfanumerički niz
+Obavezno popunjen
+Maksimalne dužine 10 
+
+Kada ovaj atribut nije zahtevan prikazuje se oznaka NR, a kad ga nije moguće utvrditi prikazuje se oznaka NA.
+<Region>	Adresa: region
+Prikazuje se podatak o regionu iz adrese lica prema sledećem šifarniku:
+0 – Beogradski region,
+1 – Region Vojvodine, 
+2 – Region Južne i Istočne Srbije, 
+3 – Region Kosovo i Metohija,
+4 – Region Šumadije i Zapadne Srbije.	String	Lista šifara
+Obavezno popunjen
+Maksimalne dužine 2 
+
+Kada ovaj atribut nije zahtevan unosi se oznaka NR.
+<Zemlja>	Adresa: zemlja
+Prikazuje se podatak o zemlji iz adrese lica u skladu sa ISO 3166-1 alpha-2 listom šifara. 	String	Lista šifara
+Obavezno popunjen
+Maksimalne dužine 3
+
+Kada ovaj atribut nije zahtevan unosi se oznaka NR.
+<VrstaLica>	Vrsta lica
+Oznaka vrste lica prema sledećem šifarniku:
+0 – domaće fizičko lice,
+1 – strano fizičko lice,
+2 – domaće pravno lice,
+3 – strano pravno lice,
+4 – ostalo.	String	Lista šifara
+Obavezno popunjen
+Maksimalne dužine 2
+
+Kada ovaj atribut nije zahtevan unosi se oznaka NR.
+<PravnaForma>	Pravna forma
+Prikazuje se oznaka iz Šifarnika pravne forme iz Priloga 1.
+	String	Lista šifara
+Obavezno popunjen
+Maksimalne dužine 2
+
+Kada ovaj atribut nije zahtevan unosi se oznaka NR.
+<Sektor>	Institucionalni sektor
+Prikazuje se oznaka iz Šifarnika sektorske strukture iz Priloga 2.
+	String	Lista šifara
+Obavezno popunjen
+Maksimalne dužine 2
+
+Kada ovaj atribut nije zahtevan prikazuje se oznaka NR.
+<StatusSudPostupka>	Status sudskog postupka
+Prikazuje se oznaka prema sledećem šifarniku:
+0 – Nije pokrenut sudski postupak,
+1 – Stečaj/bankrotstvo,
+2 – Stečaj/ reorganizacija,
+3 – Sudska naplata potraživanja (pokrenut je postupak naplate potraživanja od dužnika pred sudom, osim stečaja),
+4 – Ostali sudski postupci.	String	Lista šifara
+Obavezno popunjen
+Maksimalne dužine 2
+
+Kada ovaj atribut nije zahtevan prikazuje se oznaka NR, a kad ga nije moguće utvrditi prikazuje se oznaka NA.
+<DatumSudPostupka>	Datum otpočinjanja sudskog postupka. 	Date (String)	Datumski
+Obavezno popunjen 
+
+Kada ovaj atribut nije zahtevan prikazuje se oznaka NR, a kad ga nije moguće utvrditi prikazuje se oznaka NA.
+<PovezanostDFL>	Povezanost s davaocem finansijskog lizinga
+Prikazuje se oznaka koju davalac finansijskog lizinga dodeljuje prema sledećem šifarniku:
+0 – nije povezan s davaocem finansijskog lizinga,
+1 – povezan s davaocem finansijskog lizinga.	String	Lista šifara
+Obavezno popunjen
+Maksimalne dužine 2
+
+Kada ovaj atribut nije zahtevan unosi se oznaka NR.
+<OznakaPovezanosti>	Oznaka povezanosti
+Prikazuje se oznaka povezanosti koju dodeljuje davalac finansijskog lizinga. 	String	Alfanumerički niz 
+Obavezno popunjen
+Maksimalne dužine 6 
+
+Kada ovaj atribut nije zahtevan prikazuje se oznaka NR, a kad ga nije moguće utvrditi prikazuje se oznaka NA.
+<DatumStanja>	Datum važenja podataka. 
+	Date	Datumski
+Obavezno popunjen
+Primer podataka u xml formatu:
+<?xml version=“1.0“ encoding=“UTF-8“?>
+<Dokument>
+<PodatkeObradio>Petar Petrovic</PodatkeObradio>
+<Kontakt>011-632145, petar.petrovic@nbs.rs</Kontakt>
+<DinamikaSlanja>1</DinamikaSlanja>
+<ObuhvatPodataka>1</ObuhvatPodataka>
+<ReferentniPodaci>
+<ReferentniPodatak>
+<MaticniBroj>11122233</MaticniBroj>
+<Lice>11122233</Lice>
+<PIB>NR</PIB>
+<Sediste>NR</Sediste>
+<MaticnoDrustvo>NR</MaticnoDrustvo>
+<NajMaticnoDrustvo>NR</NajMaticnoDrustvo>
+<PovezanoLice>NR</PovezanoLice>
+<TipVeze>NR</TipVeze>
+<Ime> Lizing X doo Beograd</Ime>
+<Pol>NR</Pol>
+<Telefon>NR</Telefon>
+<InternetAdresa>NR</InternetAdresa>
+<Email>NR</Email>
+<StatusLica>NR</StatusLica>
+<AdresaUlica>Milutina Milankovica 97</AdresaUlica>
+<AdresaMesto>Beograd</AdresaMesto>
+<Opstina>Novi Beograd</Opstina>
+<PostanskiBroj>11070</PostanskiBroj>
+<Region>0</Region>
+<Zemlja>NR</Zemlja>
+<VrstaLica>NR</VrstaLica>
+<PravnaForma>NR</PravnaForma>
+<Sektor>NR</Sektor>
+<StatusSudPostupka>NR</StatusSudPostupka>
+<DatumSudPostupka>NR</DatumSudPostupka>
+<PovezanostDFL>NR</PovezanostDFL>
+<OznakaPovezanosti>NR</OznakaPovezanosti>
+<DatumStanja>20.09.2023</DatumStanja>
+</ReferentniPodatak>
+<ReferentniPodatak>
+<MaticniBroj>NR</MaticniBroj>
+<Lice>01234567</Lice>
+<PIB>987654321</PIB>
+<Sediste>01234567</Sediste>
+<MaticnoDrustvo>01234567</MaticnoDrustvo>
+<NajMaticnoDrustvo>01234567</NajMaticnoDrustvo>
+<PovezanoLice>NA</PovezanoLice>
+<TipVeze>NA</TipVeze>
+<Ime>MAX doo</Ime>
+<Pol>NA</Pol>
+<Telefon>+381 060 6366 555</Telefon>
+<InternetAdresa>www.mail.rs</InternetAdresa>
+<Email>mica@gmail.com</Email>
+<StatusLica>0</StatusLica>
+<AdresaUlica>Gogoljeva 25</AdresaUlica>
+<AdresaMesto>Beograd</AdresaMesto>
+<Opstina>Novi Beograd</Opstina>
+<PostanskiBroj>11070</PostanskiBroj>
+<Region>0</Region>
+<Zemlja>NR</Zemlja>
+<VrstaLica>2</VrstaLica>
+<PravnaForma>3</PravnaForma>
+<Sektor>34</Sektor>
+<StatusSudPostupka>0</StatusSudPostupka>
+<DatumSudPostupka>NA</DatumSudPostupka>
+<PovezanostDFL>0</PovezanostDFL>
+<OznakaPovezanosti>NA</OznakaPovezanosti>
+<DatumStanja>20.09.2023</DatumStanja>
+</ReferentniPodatak>
+<ReferentniPodatak>
+<MaticniBroj>NR</MaticniBroj>
+<Lice>1305978001144</Lice>
+<PIB>NA</PIB>
+<Sediste>NR</Sediste>
+<MaticnoDrustvo>NR</MaticnoDrustvo>
+<NajMaticnoDrustvo>NR</NajMaticnoDrustvo>
+<PovezanoLice>NR</PovezanoLice>
+<TipVeze>NR</TipVeze>
+<Ime>Marko Marković</Ime>
+<Pol>NR</Pol>
+<Telefon>+381 063 111222</Telefon>
+<InternetAdresa>NA</InternetAdresa>
+<Email>marko.markovic@gmail.com</Email>
+<StatusLica>NR</StatusLica>
+<AdresaUlica>NR</AdresaUlica>
+<AdresaMesto>NR</AdresaMesto>
+<Opstina>NR</Opstina>
+<PostanskiBroj>NR</PostanskiBroj>
+<Region>NR</Region>
+<Zemlja>NR</Zemlja>
+<VrstaLica>0</VrstaLica>
+<PravnaForma>NR</PravnaForma>
+<Sektor>NR</Sektor>
+<StatusSudPostupka>NR</StatusSudPostupka>
+<DatumSudPostupka>NR</DatumSudPostupka>
+<PovezanostDFL>0</PovezanostDFL>
+<OznakaPovezanosti>NR</OznakaPovezanosti>
+<DatumStanja>20.09.2023</DatumStanja>
+</ReferentniPodatak>
+<ReferentniPodatak>
+<MaticniBroj>NR</MaticniBroj>
+<Lice>1210988715020</Lice>
+<PIB>NR</PIB>
+<Sediste>NR</Sediste>
+<MaticnoDrustvo>NR</MaticnoDrustvo>
+<NajMaticnoDrustvo>NR</NajMaticnoDrustvo>
+<PovezanoLice>NR</PovezanoLice>
+<TipVeze>NR</TipVeze>
+<Ime>Zoran Marković</Ime>
+<Pol>NR</Pol>
+<Telefon>+381 063 111333</Telefon>
+<InternetAdresa>NA</InternetAdresa>
+<Email>zoran.markovic@gmail.com</Email>
+<StatusLica>NR</StatusLica>
+<AdresaUlica>NR</AdresaUlica>
+<AdresaMesto>NR</AdresaMesto>
+<Opstina>NR</Opstina>
+<PostanskiBroj>NR</PostanskiBroj>
+<Region>NR</Region>
+<Zemlja>NR</Zemlja>
+<VrstaLica>0</VrstaLica>
+<PravnaForma>NR</PravnaForma>
+<Sektor>NR</Sektor>
+<StatusSudPostupka>NR</StatusSudPostupka>
+<DatumSudPostupka>NR</DatumSudPostupka>
+<PovezanostDFL>0</PovezanostDFL>
+<OznakaPovezanosti>NR</OznakaPovezanosti>
+<DatumStanja>20.09.2023</DatumStanja>
+</ReferentniPodatak>
+</ReferentniPodaci>
+</Dokument>
+
+2. SKUP PODATAKA: PODACI O INSTRUMENTU (RZA-INS)
+Naziv dokumenta: <PodaciInstrumenti>
+Dinamika dostave: dnevno na dan kada se instrument prvi put registruje i pri svakoj promeni
+Primarni ključ:
+1.	jedinstvena oznaka davaoca finansijskog lizinga,
+2.	jedinstvena oznaka ugovora i
+3.	jedinstvena oznaka instrumenta.
+
+Tabela 6. Pregled i opis atributa u Skupu podataka Podaci o instrumentu
+naziv taga	sadržaj	tip	napomena
+<MaticniBroj>
+	Jedinstvena oznaka davaoca finansijskog lizinga, odnosno matični broj davaoca finansijskog lizinga koji dostavlja podatke.	String	Numerički niz
+Obavezno popunjen
+Maksimalne dužine 8
+<BrojUgovora>	Jedinstvena oznaka ugovora 
+oznaka koju primenjuje davalac finansijskog lizinga za jedinstveno obeležavanje i razlikovanje svakog ugovora. 	String	Alfanumerički niz
+Obavezno popunjen
+Maksimalne dužine 50
+<BrojInstrumenta>	Jedinstvena oznaka instrumenta.
+Oznaka koju primenjuje davalac finansijskog lizinga za jedinstvenu identifikaciju svakog instrumenta koji nastaju po osnovu jednog ugovora. 	String	Alfanumerički niz
+Obavezno popunjen
+Maksimalne dužine 50
+<VrstaInstrumenta>	Vrsta instrumenta.
+Prikazuje se vrsta instrumenta prema sledećem šifarniku: 
+13 – Finansijski lizing. 	String	Lista šifara
+Obavezno popunjen
+Maksimalne dužine 2
+<TipAmortizacije>	Tip amortizacije.
+Prikazuje se oznaka prema sledećem šifarniku:
+0 – isti iznos rate (glavnica plus kamata),
+1 – prva rata uključuje samo kamatu, preostale rate su konstantne,
+2 – isti iznos glavnice u svakoj rati,
+3 – ceo iznos glavnice na kraju perioda otplate (bullet payment),
+4 – drugi tip amortizacije.	String	Lista šifara
+Obavezno popunjen
+Maksimalne dužine 1 
+
+
+<Valuta>	Valuta.
+Prikazuje se podatak o valuti prema šifarniku iz ISO 4217 standarda.	String	Lista šifara
+Obavezno popunjen
+Maksimalne dužine 3
+
+<UgovorenaZastita>	Ugovorena zaštita od rizika.
+Prikazuje se oznaka iz Šifarnika ugovorene zaštite od rizika iz Priloga 3.	String	Lista šifara
+Obavezno popunjen
+Maksimalne dužine 2
+
+Za instrumente koji nemaju ugovorenu zaštitu unosi se oznaka “NA”.
+<DatumUgovora>	Datum od kada je ugovor obavezujući.	Date	Datum 
+Obavezno popunjen
+<DatumGlavnica>	Datum početka otplate glavnice.	Date
+	Datum 
+Obavezno popunjen 
+<DatumKamata>	Datum početka otplate kamate.
+	Date
+	Datum 
+Obavezno popunjen
+<GornjaKS>	Gornja granica kretanja kamatne stope.	Percent
+(String)	Procenat 
+Obavezno popunjen
+
+Za instrumente za koje nije ugovorena ili se ne može utvrditi gornja granica kretanja kamatne stope unosi se oznaka “NA”.
+<DonjaKS>	Donja granica kretanja kamatne stope.
+
+	Percent
+(String)	Procenat
+Obavezno popunjen
+
+Za instrumente za koje nije ugovorena ili se ne može utvrditi donja granica kretanja kamatne stope unosi se oznaka “NA”.
+<UcestalostPromeneKS>	Učestalost promene kamatne stope.
+Prikazuje se dinamika promene kamatne stope prema sledećem šifarniku:
+0 – dnevno,
+1 – mesečno,
+2 – kvartalno,
+3 – polugodišnje,
+4 – godišnje,
+5 – po odluci poverioca,
+6 – druga učestalost.	String	Lista šifara
+Obavezno popunjen
+Maksimalne dužine 2
+
+U slučaju instrumenata kod kojih kamatna stopa nije podložna promenama ili se učestalost promene kamatne stope ne može utvrditi unosi se oznaka “NA”.
+<Marza>	Kamatna marža.	Percent
+(String)	Procenat, pri čemu se u slučaju da je ugovoreno da se kamatna marža oduzima od referentne kamatne stope vrednost se unosi sa negativnim predznakom
+Obavezno popunjen 
+
+U slučaju instrumenata kod kojih se kamatna marža ne primenjuje unosi se oznaka “NA”.
+<VrstaKS>	Vrsta kamatne stope.
+Prikazuje se oznaka prema sledećem šifarniku:
+0 – fiksna,
+1 – promenljiva,
+2 – mešovita.	String	Lista šifara
+Obavezno popunjen
+Maksimalne dužine 2
+
+U slučaju instrumenata na koje se ne primenjuje kamatna stopa unosi se oznaka “NA”.
+<DatumDospeca>	Ugovoreni datum dospeća.
+	Date
+	Datum 
+Obavezno popunjen
+<MaxIznosObaveze>	Iznos preuzete obaveze u trenutku sklapanja ugovora. 	Decimal
+	Iznos u RSD
+Obavezno popunjen
+Maksimalne dužine 15 celih 
+<IznosRate>	Iznos rate. 
+	Decimal
+	Iznos u RSD
+Obavezno popunjen
+Maksimalne dužine 15 celih
+<DinamikaGlavnica>	Dinamika izmirivanja obaveza (glavnica).
+Prikazuje se dinamika otplate prema sledećem šifarniku:
+1 – mesečno;
+2 – kvartalno;
+3 – polugodišnje;
+4 – godišnje;
+5 – na kraju perioda otplate;
+6 – ostalo.	String	Lista šifara
+Obavezno popunjen
+Maksimalne dužine 1
+
+
+<DinamikaKamata>	Dinamika izmirivanja obaveza (kamata).
+Prikazuje se dinamika otplate prema sledećem šifarniku:
+1 – mesečno;
+2 – kvartalno;
+3 – polugodišnje;
+4 – godišnje;
+5 – na kraju perioda otplate;
+6 – ostalo.	String	Lista šifara
+Obavezno popunjen
+Maksimalne dužine 1
+
+<RKS>	Referentna kamatna stopa.
+Oznaka se sastoji iz kombinacije dve šifre. 
+Na prvoj poziciji se unosi vrsta referentne kamatne stope kao neka od sledećih oznaka: EURIBOR, BELIBOR, RKS, USD LIBOR, GBP LIBOR, EUR LIBOR, JPY LIBOR, CHF LIBOR, MIBOR, OSRR i OMRR.
+Na drugoj poziciji unosi ročnost kao neka od sledećih oznaka: ON, 1W, 2W, 3W, 1M, 2M, 3M, 4M, 5M, 6M, 7M, 8M, 9M, 10M, 11M, 12M. 	String
+	Lista šifara, pri čemu se dve šifre prikazuju odvojene zarezom 
+Obavezno popunjen
+Maksimalne dužine 15
+
+U slučaju instrumenata sa fiksnom kamatnom stopom (šifra 0 u atributu Vrsta kamatne stope u ovom skupu podataka) i instrumenata na koje se ne primenjuje kamatna stopa unosi se oznaka “NA”.
+<DatumTransakcije>	Datum transakcije.
+	Date
+(String)	Datum 
+Obavezno popunjen
+
+U slučaju da do izveštajnog datuma još nije realizovan  instrument prikazuje se oznaka “NA”.
+<DatumStanja>	Datum važenja podataka. 
+	Date	Datumski
+Obavezno popunjen
+Primer podataka u xml formatu:
+<?xml version=“1.0“encoding=“UTF-8“?>
+<Dokument>
+<PodatkeObradio>Petar Petrovic</PodatkeObradio>
+<Kontakt>011-632145, petar.petrovic@nbs.rs</Kontakt>
+<DinamikaSlanja>1</DinamikaSlanja>
+<ObuhvatPodataka>1</ObuhvatPodataka>
+<PodaciInstrumenti>
+<PodaciInstrument>
+<MaticniBroj>07004893</MaticniBroj>
+<BrojUgovora>L85691254</BrojUgovora>
+<BrojInstrumenta>4500654988222</BrojInstrumenta>
+<VrstaInstrumenta>13</VrstaInstrumenta>
+<TipAmortizacije>0</TipAmortizacije>
+<Valuta>RSD</Valuta>
+<UgovorenaZastita>0</UgovorenaZastita>
+<DatumUgovora>11.01.2022</DatumUgovora>
+<DatumGlavnica>11.02.2022</DatumGlavnica>
+<DatumKamata>11.02.2022</DatumKamata>
+<GornjaKS> NA</GornjaKS>
+<DonjaKS>NA</DonjaKS>
+<UcestalostPromeneKS>NA</UcestalostPromeneKS>
+<Marza> NA</Marza>
+<VrstaKS>0 </VrstaKS>
+<DatumDospeca>11.01.2024</DatumDospeca>
+<MaxIznosObaveze>12000000.00</MaxIznosObaveze>
+<IznosRate>576154.60</IznosRate>
+<DinamikaGlavnica>1</DinamikaGlavnica>
+<DinamikaKamata>1</DinamikaKamata>
+<RKS>NA</RKS>
+<DatumTransakcije>12.01.2022</DatumTransakcije>
+<DatumStanja>20.09.2023</DatumStanja>
+</PodaciInstrument>
+</PodaciInstrumenti>
+</Dokument>
+3. SKUP PODATAKA: FINANSIJSKI PODACI (RZA-FP)
+Naziv dokumenta: <FinansijskiPodaci>
+Dinamika dostave: mesečno (dnevno za nove/ promenjene podatke o instrumentu)
+Primarni ključ:
+1.	jedinstvena oznaka davaoca finansijskog lizinga,
+2.	jedinstvena oznaka ugovora i
+3.	jedinstvena oznaka instrumenta.
+Tabela 7. Pregled i opis atributa u Skupu podataka Finansijski podaci
+naziv taga	sadržaj	tip	napomena
+<MaticniBroj>
+	Jedinstvena oznaka davaoca finansijskog lizinga, odnosno matični broj davaoca finansijskog lizinga koji dostavlja podatke.	String	Numerički niz
+Obavezno popunjen
+Maksimalne dužine 8
+<BrojUgovora>	Jedinstvena oznaka ugovora 
+oznaka koju primenjuje davalac finansijskog lizinga za jedinstveno obeležavanje i razlikovanje svakog ugovora. 	String	Alfanumerički niz
+Obavezno popunjen
+Maksimalne dužine 50
+<BrojInstrumenta>	Jedinstvena oznaka instrumenta.
+Oznaka koju primenjuje davalac finansijskog lizinga za jedinstvenu identifikaciju svakog instrumenta koji nastaju po osnovu jednog ugovora. 	String	Alfanumerički niz
+Obavezno popunjen
+Maksimalne dužine 50
+<NKS>	Nominalna kamatna stopa. 	Percent
+	Procenat, pri čemu se prihvataju i pozitivne i negativne vrednosti
+Obavezno popunjen 
+<EKS>	Efektivna kamatna stopa. 	Percent
+	Procenat, pri čemu se prihvataju i pozitivne i negativne vrednosti
+Obavezno popunjen 
+<DatumPromeneKS>	Datum sledeće promene kamatne stope. 	Date
+(String)	Datum 
+Obavezno popunjen
+
+Za instrumente za koje ovaj atribut nije moguće utvrditi i za koje nije ugovorom predviđena promena kamatne stope unosi se oznaka “NA”.
+<NeotplaceniNomIznos>	Neotplaćeni nominalni iznos duga.	Decimal	Iznos u RSD
+Obavezno popunjen
+Maksimalne dužine 15 celih
+<IznosDocnje>	Iznos u docnji.	Decimal
+	Iznos u RSD
+Obavezno popunjen
+Maksimalne dužine 15 celih
+<DatumDocnje>	Datum od kada se instrument nalazi u docnji.
+	Date
+(String)	Datum 
+Obavezno popunjen
+
+Ako je iznos atributa ''Iznos u docnji'' nula, kao vrednost ovog atributa navodi se ''NA''.
+<ObracunataKamata>	Obračunati iznos kamate.
+	Decimal
+	Iznos u RSD
+Obavezno popunjen
+Maksimalne dužine 15 celih
+<RedovnaKamata>	Redovna kamata.
+	Decimal
+	Iznos u RSD
+Obavezno popunjen
+Maksimalne dužine 15 celih
+<ZateznaKamata>	Zatezna kamata.	Decimal
+	Iznos u RSD
+Obavezno popunjen
+Maksimalne dužine 15 celih
+<DatumStanja>	Datum važenja podataka. 
+	Date	Datumski
+Obavezno popunjen
+Primer podataka u xml formatu:
+<?xml version=“1.0“encoding=“UTF-8“?>
+<Dokument>
+<PodatkeObradio>Petar Petrovic</PodatkeObradio>
+<Kontakt>011-632145, petar.petrovic@nbs.rs</Kontakt>
+<DinamikaSlanja>1</DinamikaSlanja>
+<ObuhvatPodataka>1</ObuhvatPodataka>
+<FinansijskiPodaci>
+<FinansijskiPodatak>
+<MaticniBroj>07004893</MaticniBroj>
+<BrojUgovora>1210971718202</BrojUgovora>
+<BrojInstrumenta>16450710555009</BrojInstrumenta>
+<NKS>4.08</NKS>
+<EKS>5.10</EKS>
+<DatumPromeneKS>NA</DatumPromeneKS>
+<NeotplaceniNomIznos>10147052.05</NeotplaceniNomIznos>
+<IznosDocnje>0.00</IznosDocnje>
+<DatumDocnje>NA</DatumDocnje>
+<ObracunataKamata>457850.50</ObracunataKamata>
+<RedovnaKamata>0.00</RedovnaKamata>
+<ZateznaKamata>0.00</ZateznaKamata>
+<DatumStanja>19.09.2023</DatumStanja>
+</FinansijskiPodatak>
+</FinansijskiPodaci>
+</Dokument>
+
+4. SKUP PODATAKA: RAČUNOVODSTVENI I REGULATORNI PODACI (RZA-RRP)
+Naziv dokumenta: <RacunovodstveniPodaci>
+Dinamika dostave: mesečno (dnevno za nove/ promenjene podatke o instrumentu)
+Primarni ključ:
+1.	jedinstvena oznaka davaoca finansijskog lizinga,
+2.	jedinstvena oznaka ugovora i
+3.	jedinstvena oznaka instrumenta.
+Tabela 8. Pregled i opis atributa u Skupu podataka računovodstveni i regulatorni podaci
+naziv taga	sadržaj	tip	napomena
+<MaticniBroj>
+	Jedinstvena oznaka davaoca finansijskog lizinga, odnosno matični broj davaoca finansijskog lizinga koji dostavlja podatke.	String	Numerički niz
+Obavezno popunjen
+Maksimalne dužine 8
+<BrojUgovora>	Jedinstvena oznaka ugovora 
+oznaka koju primenjuje davalac finansijskog lizinga za jedinstveno obeležavanje i razlikovanje svakog ugovora. 	String	Alfanumerički niz
+Obavezno popunjen
+Maksimalne dužine 50
+<BrojInstrumenta>	Jedinstvena oznaka instrumenta.
+Oznaka koju primenjuje davalac finansijskog lizinga za jedinstvenu identifikaciju svakog instrumenta koji nastaju po osnovu jednog ugovora. 	String	Alfanumerički niz
+Obavezno popunjen
+Maksimalne dužine 50
+<RacKlasifikacija>	Računovodstvena klasifikacija instrumenta.
+Prikazuje se oznaka prema sledećem šifarniku:
+1 – Vrednovani po amortizovanoj vrednosti,
+2 – Vrednovani obavezno po fer vrednosti kroz bilans uspeha,
+3 – Vrednovani opciono po fer vrednosti kroz bilans uspeha,
+4 – Vrednovani obavezno po fer vrednosti kroz ostali rezultat,
+5 – Vrednovani opciono po fer vrednosti kroz ostali rezultat. 	String	Lista šifara
+Obavezno popunjen
+Maksimalne dužine 2
+
+Za instrumente koji se ne vrednuju u skladu sa MSFI 9 unosi se oznaka „NA“.
+<BilansPriznavanje>	Bilansno priznavanje instrumenta.
+Prikazuje se oznaka prema sledećem šifarniku:
+1 – U potpunosti priznat u bilansu stanja,
+2 – Delimično priznat u bilansu stanja,
+3 – U potpunosti prestao da se priznaje.	String	Lista šifara
+Obavezno popunjen
+Maksimalne dužine 1
+<AkuOtpis>	Akumulirani iznos otpisa. 	Decimal
+(String)	Iznos u RSD
+Obavezno popunjen
+Maksimalne dužine 15 celih 
+
+Za instrumente koji su u potpunosti prestali da se priznaju, a koji se i dalje servisiraju, navodi se „NR“.
+<AkuObezvredjenje>	Akumulirani iznos obezvređenja.
+
+	Decimal
+(String)	Iznos u RSD
+Obavezno popunjen
+Maksimalne dužine 15 celih
+
+Ako se za atribut „Vrste nivoa obezvređenja“ iz skupa podataka „Računovodstveni i regulatorni podaci“ navodi „Ne vrši se obezvređenje“ navodi se „NA“.
+Za instrumente koji su u potpunosti prestali da se priznaju, a koji se i dalje servisiraju navodi se „NR“.
+<NivoObezvredjenja>	Vrsta nivoa obezvređenja.
+Prikazuje se oznaka prema sledećem šifarniku:
+0 – Ne vrši se obezvređenje,
+1 – Klasifikovan u nivo 1,
+2 – Klasifikovan u nivo 2,
+3 – Klasifikovan u nivo 3,
+4 – Klasifikovan u nivo 3 u momentu priznavanja.	String	Lista šifara
+Obavezno popunjen
+Maksimalne dužine 2
+
+Za „instrumente koji su u potpunosti prestali da se priznaju, a koji se i dalje servisiraju“ navodi se „NR“.
+<NacinObezvredjenja>	Način utvrđivanja obezvređenja.
+Prikazuje se oznaka prema sledećem šifarniku:
+1 – Pojedinačna osnova,
+2 – Grupna osnova.
+	String	Lista šifara
+Obavezno popunjen
+Maksimalne dužine 2
+
+Ukoliko se za atribut Akumulirani iznos obezvređenja navodi „NA“, i u ovom atributu navodi se „NA“. Analogno se primenjuje i kada se za atribut Akumulirani iznos obezvređenja navodi „NR“.
+<AkumuliranaFVKR>	Akumulirani iznos promene fer vrednosti usled kreditnog rizika.	Decimal
+(String)	Iznos u RSD
+Obavezno popunjen
+Maksimalne dužine 15 celih
+
+Za instrumente koji su u potpunosti prestali da se priznaju ali se i dalje servisiraju, instrumente koji nisu priznati u bilansu stanja, kao i instrumente koji se ne vrednuju po fer vrednosti kroz bilans uspeha, navodi se „NR“.
+<FBE>	Oznaka vrste restrukturiranja potraživanja.
+Prikazuje se oznaka prema sledećem šifarniku:
+0 – Nije restrukturirano niti su izmenjeni uslovi otplate,
+1 – Produžen rok otplate glavnice i/ili kamate,
+2 – Promenjena visina kamatne stope,
+3 – Otpisan deo iznosa restrukturiranog potraživanja,
+4 – Ostalo,
+5 – Izmenjeni uslovi otplate, ali se instrument ne smatra restrukturiranim potraživanjem prema definiciji iz Odluke o klasifikaciji.	String	Lista šifara
+Obavezno popunjen
+Maksimalne dužine 1
+<DatumFBE>	Datum restrukturiranja.	Date	Datum 
+Obavezno popunjen
+<NetoVrednost>	Neto knjigovodstvena vrednost.	Decimal
+(String)	Iznos u RSD
+Obavezno popunjen
+Maksimalne dužine 15 celih
+
+Za instrumente koji su u potpunosti prestali da se priznaju, a i dalje se servisiraju navodi se „NR“.
+<DatumStanja>	Datum važenja podataka. 
+	Date	Datumski
+Obavezno popunjen
+Primer podataka u xml formatu:
+<?xml version=“1.0“encoding=“UTF-8“?>
+<Dokument>
+<PodatkeObradio>Petar Petrovic</PodatkeObradio>
+<Kontakt>011-632145, petar.petrovic@nbs.rs</Kontakt>
+<DinamikaSlanja>1</DinamikaSlanja>
+<ObuhvatPodataka>1</ObuhvatPodataka>
+<RacunovodstveniPodaci>
+<RacunovodstveniPodatak>
+<MaticniBroj>07004893</MaticniBroj>
+<BrojUgovora>124508955341</BrojUgovora>
+<BrojInstrumenta>126500055341</BrojInstrumenta>
+<RacKlasifikacija>1</RacKlasifikacija>
+<BilansPriznavanje>1</BilansPriznavanje >
+<AkuOtpis>0.00</AkuOtpis>
+<AkuObezvredjenje>0.00</AkuObezvredjenje>
+<NivoObezvredjenja>1</NivoObezvredjenja>
+<NacinObezvredjenja>1</NacinObezvredjenja>
+<AkumuliranaFVKR>0.00</AkumuliranaFVKR>
+<FBE>0</FBE>
+<DatumFBE>11.01.2022</DatumFBE>
+<NetoVrednost>12000125.00</NetoVrednost>
+<DatumStanja>19.09.2023</DatumStanja>
+</RacunovodstveniPodatak >
+</RacunovodstveniPodaci >
+</Dokument>
+
+
+5. SKUP PODATAKA: PODACI O VEZI IZMEĐU LICA POVEZANIH SA INSTRUMENTOM I INSTRUMENTA (RZA-LI)
+Naziv dokumenta: <VezaLicaInstrumenata>
+Dinamika dostave: dnevno na dan kada se instrument prvi put registruje i pri svakoj promeni
+Primarni ključ:
+1.	jedinstvena oznaka davaoca finansijskog lizinga,
+2.	jedinstvena oznaka lica povezanog sa instrumentom,
+3.	jedinstvena oznaka ugovora,
+4.	jedinstvena oznaka instrumenta i
+5.	uloga lica povezanog sa instrumentom.
+Tabela 9. Pregled i opis atributa u Skupu podataka Podaci o vezi između lica povezanih sa instrumentom i instrumenta
+naziv taga	sadržaj	tip	napomena
+<MaticniBroj>
+	Jedinstvena oznaka davaoca finansijskog lizinga, odnosno matični broj davaoca finansijskog lizinga koji dostavlja podatke.	String	Numerički niz
+Obavezno popunjen
+Maksimalne dužine 8
+<Lice>	Jedinstvena oznaka lica povezanog sa instrumentom. 	String	Alfanumerički niz
+Obavezno popunjen
+Maksimalne dužine 30
+<BrojUgovora>	Jedinstvena oznaka ugovora 
+oznaka koju primenjuje davalac finansijskog lizinga za jedinstveno obeležavanje i razlikovanje svakog ugovora. 	String	Alfanumerički niz
+Obavezno popunjen
+Maksimalne dužine 50
+<BrojInstrumenta>	Jedinstvena oznaka instrumenta.
+Oznaka koju primenjuje davalac finansijskog lizinga za jedinstvenu identifikaciju svakog instrumenta koji nastaju po osnovu jednog ugovora. 	String	Alfanumerički niz
+Obavezno popunjen
+Maksimalne dužine 50
+<UlogaLica>	Uloga lica povezanog sa instrumentom.
+Prikazuje se uloga lica prema sledećem šifarniku:
+0 – poverilac,
+1 – dužnik.	String	Lista šifara
+Obavezno popunjen
+Maksimalne dužine 1
+<KreditnaZaduzenost>	Stepen kreditne zaduženosti dužnika u trenutku odobravanja.	Percent
+(String)	Procenat 
+Obavezno popunjen 
+Maksimalne dužine 2 cela
+
+Kada ovaj atribut nije zahtevan prikazuje se oznaka NR, a kad ga nije moguće utvrditi prikazuje se oznaka NA.
+<DatumStanja>	Datum važenja podataka. 
+	Date	Datumski
+Obavezno popunjen
+Primer podataka u xml formatu:
+<?xml version=“1.0“encoding=“UTF-8“?>
+<Dokument>
+<PodatkeObradio>Petar Petrovic</PodatkeObradio>
+<Kontakt>011-632145, petar.petrovic@nbs.rs</Kontakt>
+<DinamikaSlanja>1</DinamikaSlanja>
+<ObuhvatPodataka>1</ObuhvatPodataka>
+<VezaLicaInstrumenata>
+<VezaLicaInstrumenta>
+<MaticniBroj>07004893</MaticniBroj>
+<Lice>07004893</Lice>
+<BrojUgovora>124508955341</BrojUgovora>
+<BrojInstrumenta>124508955341</BrojInstrumenta>
+<UlogaLica>0</UlogaLica>
+<KreditnaZaduzenost>NR</KreditnaZaduzenost>
+<DatumStanja>19.09.2023</DatumStanja>
+</VezaLicaInstrumenta>
+<VezaLicaInstrumenta>
+<MaticniBroj>07004893</MaticniBroj>
+<Lice>1205978715203</Lice>
+<BrojUgovora>124508955341</BrojUgovora>
+<BrojInstrumenta>124508955341</BrojInstrumenta>
+<UlogaLica>1</UlogaLica>
+<KreditnaZaduzenost>23.45</KreditnaZaduzenost>
+<DatumStanja>19.09.2023</DatumStanja>
+/VezaLicaInstrumenta>
+</VezaLicaInstrumenata>
+</Dokument>
+
+6. SKUP PODATAKA: PODACI O SREDSTVIMA OBEZBEĐENjA (RZA-SO)
+Naziv dokumenta: <SredstvaObezbedjenja>
+Dinamika dostave: dnevno na dan kada je sredstvo obezbeđenja primljeno kao zaštita instrumenta i pri svakoj promeni
+Primarni ključ:
+1.	jedinstvena oznaka davaoca finansijskog lizinga,
+2.	jedinstvena oznaka sredstva obezbeđenja i
+3.	jedinstvena oznaka pružaoca kreditne zaštite .
+Tabela 10. Pregled i opis atributa u Skupu podataka Podaci o sredstvima obezbeđenja
+naziv taga	sadržaj	tip	napomena
+<MaticniBroj>
+	Jedinstvena oznaka davaoca finansijskog lizinga, odnosno matični broj davaoca finansijskog lizinga koji dostavlja podatke.	String	Numerički niz
+Obavezno popunjen
+Maksimalne dužine 8
+<BrojSO>	Jedinstvena oznaka sredstva obezbeđenja.
+Oznaka sredstva obezbeđenja koju davalac finansijskog lizinga dodeljuje svakom sredstvu obezbeđenja koje služi kao kreditna zaštita instrumentu. 	String	Alfanumerički niz
+Obavezno popunjen
+Maksimalne dužine 50
+<PruzalacZastite>	Jedinstvena oznaka pružaoca kreditne zaštite. 	String	Alfanumerički niz
+Obavezno popunjen
+Maksimalne dužine 30
+<VrstaЅO>	Oznaka vrste sredstva obezbeđenja.
+Prikazuje se prema sledećem šifarniku:
+3 – garancije i jemstva, 
+13 – proizvodne mašine i oprema,
+14 – građevinske mašine i oprema,
+15 – poljoprivredne mašine i oprema,
+16 – teretna vozila, minibusi i autobusi,
+17 – putnička vozila,
+18 – šinska vozila, plovni objekti i vazduhoplovi,
+19 – aparati za domaćinstvo,
+20 – mašine i oprema za pružanje usluga,
+21 – ostale pokretne stvari,
+22 – komercijalne nepokretne stvari,
+23 – ostale nepokretne stvari,
+24 – ostala sredstva obezbeđenja	String	Lista šifara
+Obavezno popunjen
+Maksimalne dužine 2
+<VrstaVrednostSO>	Vrsta vrednosti sredstva obezbeđenja.
+Prikazuje se prema sledećem šifarniku:
+0 – nominalna vrednost,
+1 – fer vrednost,
+2 – tržišna vrednost,
+3 – dugoročno održiva vrednost,
+4 – ostale vrednosti sredstva obezbeđenja.	String	Lista šifara
+Obavezno popunjen
+Maksimalne dužine 1
+<VrednostSO>	Vrednost sredstva obezbeđenja.	Decimal	Iznos u RSD
+Obavezno popunjen
+Maksimalne dužine 15 celih
+<MetodVrednostSO>	Metod utvrđivanja vrednosti sredstva obezbeđenja.
+Prikazuje se prema sledećem šifarniku:
+0 – procena po tekućoj tržišnoj vrednosti (mark-to-market),
+1 – procena pružaoca kreditne zaštite,
+2 – procena poverioca,
+3 – procena nezavisnih procenitelja,
+4 – ostale metode utvrđivanja vrednosti sredstva obezbeđenja	String	Lista šifara
+Obavezno popunjen
+Maksimalne dužine 1
+<MestoNepokretnost>	Mesto gde se nalazi nepokretnost.
+Prikazuje se ISO 3166-1 alpha-2 šifra zemlje. Nakon šifre zemlje u kojoj se nepokretnost nalazi, razdvojeno zarezom unosi se: 
+	za nepokretnosti koje se nalaze u Republici Srbiji – poštanski broj mesta gde se nepokretnost nalazi, 
+	za nepokretnosti koje se ne nalaze u Republici Srbiji ali se nalaze u zemljama za koje postoje raspoloživi poštanski brojevi unosi se poštanski broj mesta u kom se nepokretnost nalazi,
+	za nepokretnosti koje se ne nalaze u Republici Srbiji već se nalaze u zemljama za koje ne postoje raspoloživi poštanski brojevi unosi se NUTS3 oznaka regiona gde se nepokretnost nalazi, ako je takva oznaka raspoloživa za zemlju u kojoj se nepokretnost nalazi.
+Za nepokretnosti koje se nalaze u zemljama u kojima se ne koriste poštanski brojevi i za koje ne postoje NUTS3 oznake, unosi se samo ISO 3166-1 alpha-2 šifra zemlje, odnosno ne unosi se zarez kao ni oznaka nakon zareza.	String	Lista šifara
+Obavezan podatak
+Maksimalne dužine 20
+
+Podatak se prikazuje samo za nepokretnosti odnosno za sredstva obezbeđenja za koja je u atributu Oznaka vrste sredstva obezbeđenja uneta šifra 22 – komercijalne nepokretne stvari ili 
+23 – ostale nepokretne stvari, za ostale vrste sredstava obezbeđenja unosi se oznaka „NA“.
+<DatumVrednostSO>	Poslednji datum utvrđivanja vrednosti sredstva obezbeđenja. 	Date	Datum 
+Obavezan podatak
+<IVrednostSO>	Inicijalna vrednost sredstva obezbeđenja.	Decimal	Iznos u RSD
+Obavezno popunjen
+Maksimalne dužine 15 celih
+<DatumIVrednostSO >	Datum utvrđivanja inicijalne vrednosti sredstva obezbeđenja.	Date	Datum 
+Obavezno popunjen
+<DatumStanja>	Datum važenja podataka. 
+	Date	Datumski
+Obavezno popunjen
+Primer podataka u xml formatu:
+<?xml version=“1.0“encoding=“UTF-8“?>
+<Dokument>
+<PodatkeObradio>Petar Petrovic</PodatkeObradio>
+<Kontakt>011-632145, petar.petrovic@nbs.rs</Kontakt>
+<DinamikaSlanja>1</DinamikaSlanja>
+<ObuhvatPodataka>1</ObuhvatPodataka>
+<SredstvaObezbedjenja>
+<SredstvoObezbedjenja>
+<MaticniBroj>07004893</MaticniBroj>
+<BrojSO>164251256698</BrojSO>
+<PruzalacKrZastite>1610982710622</PruzalacKrZastite>
+<VrstaSO>23</VrstaSO>
+<VrstaVrednostiSO>2</VrstaVrednostiSO>
+<VrednostSO>12345670.00</VrednostSO>
+<MetodVrednostiSO>3</MetodVrednostiSO> 
+<MestoNepokretnost>RS,125303</MestoNepokretnost>
+<DatumVrednostSO>25.04.2022</DatumVrednostSO>
+<IVrednostSO>12345670.00</IVrednostSO>
+<DatumIVrednostSO>25.04.2022</DatumIVrednostSO> 
+<DatumStanja>19.09.2023</DatumStanja>
+</SredstvoObezbedjenja>
+</SredstvaObezbedjenja>
+</Dokument>
+
+7. SKUP PODATAKA: PODACI O VEZI IZMEĐU SREDSTVA OBEZBEĐENjA I INSTRUMENTA (RZA-SOI)
+Naziv dokumenta: <VezaSredstavaObezbedjenjaInstrumenata>
+Dinamika dostave: mesečno (dnevno za nove/promenjene podatke o sredstvu obezbeđenja ili instrumentu)
+Primarni ključ:
+1.	jedinstvena oznaka davaoca finansijskog lizinga,
+2.	jedinstvena oznaka ugovora,
+3.	jedinstvena oznaka instrumenta i
+4.	jedinstvena oznaka sredstva obezbeđenja.
+Tabela 11. Pregled i opis atributa u Skupu podataka Podaci o vezi između sredstva obezbeđenja i instrumenta
+naziv taga	sadržaj	tip	napomena
+<MaticniBroj>
+	Jedinstvena oznaka davaoca finansijskog lizinga, odnosno matični broj davaoca finansijskog lizinga koji dostavlja podatke.	String	Numerički niz
+Obavezno popunjen
+Maksimalne dužine 8
+<BrojUgovora>	Jedinstvena oznaka ugovora 
+oznaka koju primenjuje davalac finansijskog lizinga za jedinstveno obeležavanje i razlikovanje svakog ugovora. 	String	Alfanumerički niz
+Obavezno popunjen
+Maksimalne dužine 50
+<BrojInstrumenta>	Jedinstvena oznaka instrumenta.
+Oznaka koju primenjuje davalac finansijskog lizinga za jedinstvenu identifikaciju svakog instrumenta koji nastaju po osnovu jednog ugovora. 	String	Alfanumerički niz
+Obavezno popunjen
+Maksimalne dužine 50
+<BrojSO>	Jedinstvena oznaka sredstva obezbeđenja.
+Oznaka sredstva obezbeđenja koju davalac finansijskog lizinga dodeljuje svakom sredstvu obezbeđenja koje služi kao kreditna zaštita instrumentu. 	String	Alfanumerički niz
+Obavezno popunjen
+Maksimalne dužine 50
+<DatumStanja>	Datum važenja podataka. 
+	Date	Datumski
+Obavezno popunjen
+Primer podataka u xml formatu:
+<?xml version=“1.0“encoding=“UTF-8“?>
+<Dokument>
+<PodatkeObradio>Petar Petrovic</PodatkeObradio>
+<Kontakt>011-632145, petar.petrovic@nbs.rs</Kontakt>
+<DinamikaSlanja>1</DinamikaSlanja>
+<ObuhvatPodataka>1</ObuhvatPodataka>
+<VezaSredstavaObezbedjenjaInstrumenata>
+<VezaSredstvaObezbedjenjaInstrumenta>
+<MaticniBroj>07004893</MaticniBroj>
+<BrojUgovora>164200005789</BrojUgovora>
+<BrojInstrumenta>164200005789</BrojInstrumenta>
+<BrojSO>164251256698</BrojSO>
+<DatumStanja>19.09.2023</DatumStanja>
+<VezaSredstvaObezbedjenjaInstrumenta>
+</VezaSredstavaObezbedjenjaInstrumenata>
+</Dokument>
